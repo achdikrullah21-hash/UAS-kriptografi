@@ -55,81 +55,86 @@ def decrypt_data(data, master_password):
     return text.decode()
 
 
-@app.route("/", methods=["GET", "POST"])
-def home():
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/simpan", methods=["POST"])
+def simpan():
+
+    game = request.form.get("game")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    master = request.form.get("master")
+
+    data = f"{username}|{password}"
+
+    encrypted = encrypt_data(
+        data,
+        master
+    )
+
+    with open(DATABASE, "r") as f:
+        db = json.load(f)
+
+    db.append({
+        "game": game,
+        "data": encrypted
+    })
+
+    with open(DATABASE, "w") as f:
+        json.dump(db, f)
+
+    return render_template(
+        "login.html",
+        sukses=True
+    )
+
+
+@app.route("/dashboard", methods=["GET", "POST"])
+def dashboard():
 
     hasil = []
 
     if request.method == "POST":
 
-        aksi = request.form.get("aksi")
-
         master = request.form.get("master")
 
-        if aksi == "simpan":
+        with open(DATABASE, "r") as f:
+            db = json.load(f)
 
-            game = request.form.get("game")
+        for item in db:
 
-            username = request.form.get("username")
+            try:
 
-            password = request.form.get("password")
+                data = decrypt_data(
+                    item["data"],
+                    master
+                )
 
-            data = f"{username}|{password}"
+                username, password = data.split("|")
 
-            encrypted = encrypt_data(
-                data,
-                master
-            )
+                hasil.append({
 
-            with open(DATABASE, "r") as f:
+                    "game": item["game"],
 
-                db = json.load(f)
+                    "username": username,
 
-            db.append({
+                    "password": password
 
-                "game": game,
+                })
 
-                "data": encrypted
-
-            })
-
-            with open(DATABASE, "w") as f:
-
-                json.dump(db, f)
-
-        elif aksi == "lihat":
-
-            with open(DATABASE, "r") as f:
-
-                db = json.load(f)
-
-            for item in db:
-
-                try:
-
-                    data = decrypt_data(
-                        item["data"],
-                        master
-                    )
-
-                    username, password = data.split("|")
-
-                    hasil.append({
-
-                        "game": item["game"],
-
-                        "username": username,
-
-                        "password": password
-
-                    })
-
-                except:
-
-                    continue
+            except:
+                pass
 
     return render_template(
-        "index.html",
+        "dashboard.html",
         hasil=hasil
     )
 
