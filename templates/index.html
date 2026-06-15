@@ -1,163 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Game Account Vault</title>
-
-<style>
-
-body{
-    font-family: Arial;
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:30px;
-}
-
-.container{
-    width:80%;
-    margin:auto;
-}
-
-input{
-    width:300px;
-    padding:10px;
-    margin:5px;
-}
-
-button{
-    padding:10px 20px;
-    background:#00cc66;
-    color:white;
-    border:none;
-    cursor:pointer;
-}
-
-table{
-    margin:auto;
-    margin-top:20px;
-    border-collapse:collapse;
-}
-
-table, th, td{
-    border:1px solid white;
-    padding:10px;
-}
-
-</style>
-
 </head>
 <body>
-
-<div class="container">
 
 <h1>🎮 GAME ACCOUNT VAULT</h1>
 
 <p>
-Simpan akun game dengan aman menggunakan
-enkripsi AES.
+Sistem Penyimpanan Akun Game
+Menggunakan Enkripsi AES
 </p>
 
-<hr>
-
-<h2>Simpan Akun Game</h2>
-
-<form method="POST">
-
-<input type="hidden"
-name="aksi"
-value="simpan">
-
-<input
-type="text"
-name="game"
-placeholder="Nama Game"
-required>
-
-<br>
-
-<input
-type="text"
-name="username"
-placeholder="Username"
-required>
-
-<br>
-
-<input
-type="password"
-name="password"
-placeholder="Password"
-required>
-
-<br>
-
-<input
-type="password"
-name="master"
-placeholder="Master Password"
-required>
-
-<br><br>
-
-<button type="submit">
-SIMPAN AKUN
-</button>
-
-</form>
-
-<hr>
-
-<h2>Lihat Data</h2>
-
-<form method="POST">
-
-<input
-type="hidden"
-name="aksi"
-value="lihat">
-
-<input
-type="password"
-name="master"
-placeholder="Master Password"
-required>
-
-<br><br>
-
-<button type="submit">
-LIHAT DATA
-</button>
-
-</form>
-
-{% if hasil %}
-
-<h2>Data Akun</h2>
-
-<table>
-
-<tr>
-<th>Game</th>
-<th>Username</th>
-<th>Password</th>
-</tr>
-
-{% for item in hasil %}
-
-<tr>
-<td>{{ item.game }}</td>
-<td>{{ item.username }}</td>
-<td>{{ item.password }}</td>
-</tr>
-
-{% endfor %}
-
-</table>
-
-{% endif %}
-
-</div>
+<a href="/login">
+<button>MASUK KE SISTEM</button>
+</a>
 
 </body>
 </html>
