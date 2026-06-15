@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+</head>
+<body>
+
+<h1>Dashboard Akun Game</h1>
+
+<form action="/dashboard" method="POST">
+
+<input
+type="password"
+name="master"
+placeholder="Master Password"
+required>
+
+<button type="submit">
+LIHAT DATA
+</button>
+
+</form>
+
+{% if hasil %}
+
+<hr>
+
+<table border="1">
+
+<tr>
+<th>Game</th>
+<th>Username</th>
+<th>Password</th>
+</tr>
+
+{% for item in hasil %}
+
+<tr>
+<td>{{ item.game }}</td>
+<td>{{ item.username }}</td>
+<td>{{ item.password }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
+
+<br>
+
+<a href="/">
+Kembali
+</a>
+
+</body>
+</html>
